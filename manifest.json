@@ -1,0 +1,17 @@
+{
+  "name": "DnD Roller — CYD 2.4-inch",
+  "version": "1.0.0",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "build/2,4 inch/dndroller.ino.bootloader.bin", "offset": 4096 },
+        { "path": "build/2,4 inch/dndroller.ino.partitions.bin", "offset": 32768 },
+        { "path": "build/2,4 inch/dndroller.ino.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}
+
+

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Web Flasher - DnD Roller</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #2c3e50;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 1.1rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .hero-image {
+            margin: 28px auto 0 auto;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 360px;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .preview img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .preview figcaption {
+            text-align: center;
+            color: #555;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 26px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 22px;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+            color: #1f2937;
+            text-align: center;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin: 12px 0;
+            padding-left: 40px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #3b82f6;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .install-button-container { text-align: center; margin: 22px 0; }
+
+        esp-web-install-button {
+            --esp-tools-button-color: #2563eb;
+            --esp-tools-button-text-color: white;
+            --esp-tools-button-background: #2563eb;
+            --esp-tools-button-border-radius: 8px;
+            --esp-tools-button-padding: 12px 22px;
+            font-size: 16px;
+        }
+
+        .note {
+            text-align: center;
+            color: #e11d48;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+            color: #7c5b00;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            .section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DnD Roller ESP32 Web Flasher</h1>
+            <p class="subtitle">Flash firmware for the ESP32-2432S024R (Cheap Yellow Display, 2.4") directly from Chrome or Edge.</p>
+            <div class="hero-image">
+                <img src="web resources/square.jpg" alt="DnD Roller hero image" />
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>What is DnD Roller?</h2>
+            <p class="subtitle" style="text-align:center; margin-top:4px;">
+                A CYD (ESP32-2432S024R) based, touchscreen DnD dice roller. Choose dice type and quantity,
+                then roll. Dice are rendered as procedurally generated wireframes for a clean, minimal look.
+            </p>
+            <div class="grid" style="margin-top:18px;">
+                <figure class="preview">
+                    <img src="web resources/d6.gif" alt="D6 roll preview" />
+                    <figcaption>D6 rolling preview</figcaption>
+                </figure>
+                <figure class="preview">
+                    <img src="web resources/d20.gif" alt="D20 roll preview (add web resources/d20.gif)" />
+                    <figcaption>D20 rolling preview</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Install Firmware</h2>
+            <p class="note">Works in Chrome/Edge over HTTPS. When asked, choose your board's USB Serial port.</p>
+
+            <div class="grid">
+                <div class="card" style="border-color:#3b82f6;">
+                    <h3>CYD 2.4-inch (Normal)</h3>
+                    <ol class="steps">
+                        <li>Connect your ESP32 to the computer via USB.</li>
+                        <li>Click Connect, select the USB Serial port.</li>
+                        <li>Click Install to flash the normal display firmware.</li>
+                    </ol>
+                    <div class="install-button-container">
+                        <esp-web-install-button id="install-normal" manifest="./manifest.json">
+                            <button slot="activate">Connect (Normal)</button>
+                            <span slot="unsupported">Your browser doesn't support Web Serial. Use Chrome/Edge.</span>
+                            <span slot="not-allowed">HTTPS required. Host this via a web server.</span>
+                        </esp-web-install-button>
+                    </div>
+                </div>
+
+                <div class="card" style="border-color:#ef4444;">
+                    <h3>CYD 2.4-inch (Inverse Colors)</h3>
+                    <ol class="steps">
+                        <li>Only use this if colors appear inverted after flashing the normal build.</li>
+                        <li>Connect your ESP32 to the computer via USB.</li>
+                        <li>Click Install to flash the inverse-colors build.</li>
+                    </ol>
+                    <div class="install-button-container">
+                        <esp-web-install-button id="install-inverse" manifest="./manifest-variant-a-inverse.json">
+                            <button slot="activate">Connect (Inverse)</button>
+                            <span slot="unsupported">Your browser doesn't support Web Serial. Use Chrome/Edge.</span>
+                            <span slot="not-allowed">HTTPS required. Host this via a web server.</span>
+                        </esp-web-install-button>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="tip">Troubleshooting: If it hangs at "Initializing", press and hold the BOOT button on your ESP32 while starting the install.</div>
+        </div>
+
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const PROJECT_NAME = 'DnD Roller';
+
+            const ids = [
+                ['#install-normal', 'CYD 2.4" (Normal)'],
+                ['#install-inverse', 'CYD 2.4" (Inverse)'],
+            ];
+
+            const esp32VendorIds = [0x10C4, 0x1A86, 0x303A, 0x0403, 0x2341, 0x239A, 0x1B4F];
+            const esp32Filters = esp32VendorIds.map(id => ({ usbVendorId: id }));
+
+            function setup(btn, label, originalText) {
+                if (!btn) return;
+                btn.setAttribute('port-filters', JSON.stringify(esp32Filters));
+                btn.addEventListener('state-changed', function(e) {
+                    const activate = btn.querySelector('button[slot="activate"]');
+                    if (!activate) return;
+                    switch (e.detail.state) {
+                        case 'initializing': activate.textContent = 'Detecting ESP32...'; break;
+                        case 'preparing': activate.textContent = 'Preparing to Install'; break;
+                        case 'manifest': activate.textContent = 'Loading Firmware...'; break;
+                        case 'erasing': activate.textContent = 'Erasing Flash...'; break;
+                        case 'writing': activate.textContent = `Installing ${PROJECT_NAME} - ${label}`; break;
+                        case 'finished':
+                            activate.textContent = 'Installation Complete!';
+                            setTimeout(() => activate.textContent = originalText, 2500);
+                            break;
+                        case 'error':
+                            activate.textContent = 'Installation Failed';
+                            setTimeout(() => activate.textContent = originalText, 2500);
+                            break;
+                        default: activate.textContent = originalText;
+                    }
+                });
+            }
+
+            ids.forEach(([selector, label]) => {
+                const el = document.querySelector(selector);
+                if (!el) return;
+                const original = el.querySelector('button[slot="activate"]').textContent;
+                setup(el, label, original);
+            });
+
+            console.log('ESP Web Tools initialized with default ESP32 USB vendor filters');
+        });
+    </script>
+</body>
+</html>
+
+

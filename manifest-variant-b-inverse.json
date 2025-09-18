@@ -1,0 +1,18 @@
+{
+  "name": "Your Project – Variant B (Inverse Colors)",
+  "version": "0.0.1",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "build/Variant B inverse/bootloader.bin", "offset": 4096 },
+        { "path": "build/Variant B inverse/partitions.bin", "offset": 32768 },
+        { "path": "build/Variant B inverse/boot_app0.bin", "offset": 57344 },
+        { "path": "build/Variant B inverse/firmware.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}
+
+
